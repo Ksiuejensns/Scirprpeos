@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание страницы</title>
+</head>
+<body>
+    <h1>Создать новую страницу</h1>
+    <button onclick="openForm()">Создать</button>
+
+    <div id="formContainer" style="display:none;">
+        <h2>Введите данные</h2>
+        <input id="title" type="text" placeholder="Название"><br>
+        <textarea id="description" placeholder="Описание"></textarea><br>
+        <input id="code" type="text" placeholder="Код"><br>
+        <input id="image" type="text" placeholder="Ссылка на изображение"><br>
+        <button onclick="createPage()">Создать страницу</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        function openForm() {
+            document.getElementById("formContainer").style.display = "block";
+        }
+
+        function createPage() {
+            let title = document.getElementById("title").value;
+            let description = document.getElementById("description").value;
+            let code = document.getElementById("code").value;
+            let image = document.getElementById("image").value;
+
+            if (!title || !description || !code) {
+                alert("Заполните все поля!");
+                return;
+            }
+
+            let id = Date.now().toString(); // Уникальный ID
+            localStorage.setItem(id, JSON.stringify({ title, description, code, image }));
+
+            let link = `page.html?id=${id}`;
+            document.getElementById("result").innerHTML = `<a href="${link}" target="_blank">Открыть страницу</a>`;
+        }
+    </script>
+</body>
+</html>
