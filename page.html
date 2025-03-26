@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница</title>
+</head>
+<body>
+    <h1 id="title"></h1>
+    <p id="description"></p>
+    <pre id="code"></pre>
+    <img id="image" style="max-width:100%; display:none;">
+
+    <script>
+        let params = new URLSearchParams(window.location.search);
+        let id = params.get("id");
+
+        if (id) {
+            let data = localStorage.getItem(id);
+            if (data) {
+                let { title, description, code, image } = JSON.parse(data);
+                document.getElementById("title").textContent = title;
+                document.getElementById("description").textContent = description;
+                document.getElementById("code").textContent = code;
+                if (image) {
+                    document.getElementById("image").src = image;
+                    document.getElementById("image").style.display = "block";
+                }
+            } else {
+                document.body.innerHTML = "<h1>Страница не найдена</h1>";
+            }
+        }
+    </script>
+</body>
+</html>
